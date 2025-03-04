@@ -13,6 +13,7 @@ import Dashboard from "./pages/Dashboard";
 import CreateProject from "./pages/CreateProject";
 import ProjectUpload from "./pages/ProjectUpload";
 import ProjectDetail from "./pages/ProjectDetail";
+import ComplianceReview from "./pages/ComplianceReview";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -29,6 +30,7 @@ const App = () => (
           <Route path="/dashboard" element={<Dashboard />} />
           <Route path="/projects/create" element={<CreateProject />} />
           <Route path="/projects/:projectId" element={<ProjectDetail />} />
+          <Route path="/projects/:projectId/review" element={<ComplianceReview />} />
           <Route path="/upload" element={<ProjectUpload />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />

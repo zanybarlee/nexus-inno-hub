@@ -1,7 +1,6 @@
-
 import { useState, useEffect } from 'react';
 import { useParams, Link } from 'react-router-dom';
-import { ArrowLeft, Calendar, Users, FileCheck, Clock, CheckCircle, AlertCircle, BarChart3 } from 'lucide-react';
+import { ArrowLeft, Calendar, Users, FileCheck, Clock, CheckCircle, AlertCircle, BarChart3, ShieldCheck } from 'lucide-react';
 import MainLayout from '@/components/layout/MainLayout';
 import Button from '@/components/ui/custom/Button';
 import { toast } from '@/hooks/use-toast';
@@ -225,9 +224,20 @@ const ProjectDetail = () => {
           <div className="mb-8">
             <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-4">
               <h1 className="text-3xl font-bold">{project.title}</h1>
-              <span className={`px-3 py-1 rounded-full text-sm font-medium ${statusColors[project.status]}`}>
-                {project.status.replace('-', ' ').replace(/\b\w/g, l => l.toUpperCase())}
-              </span>
+              <div className="flex flex-wrap gap-2">
+                <span className={`px-3 py-1 rounded-full text-sm font-medium ${statusColors[project.status]}`}>
+                  {project.status.replace('-', ' ').replace(/\b\w/g, l => l.toUpperCase())}
+                </span>
+                <Link to={`/projects/${project.id}/review`}>
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    leftIcon={<ShieldCheck size={14} />}
+                  >
+                    Compliance Review
+                  </Button>
+                </Link>
+              </div>
             </div>
             <p className="text-lg text-muted-foreground">{project.description}</p>
           </div>

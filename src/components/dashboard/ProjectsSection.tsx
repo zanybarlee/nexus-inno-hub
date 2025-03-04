@@ -1,7 +1,7 @@
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { Plus } from 'lucide-react';
+import { Plus, ShieldCheck } from 'lucide-react';
 import Button from '@/components/ui/custom/Button';
 import ProjectCard from '@/components/ui/custom/ProjectCard';
 
@@ -20,6 +20,14 @@ interface ProjectsSectionProps {
 }
 
 const ProjectsSection = ({ isLoading }: ProjectsSectionProps) => {
+  const [userRole, setUserRole] = useState<string>('');
+  
+  useEffect(() => {
+    // Get user role from session storage or wherever it's stored
+    const role = sessionStorage.getItem('userRole') || '';
+    setUserRole(role);
+  }, []);
+
   // Mock data
   const projects: Project[] = [
     {
@@ -64,15 +72,30 @@ const ProjectsSection = ({ isLoading }: ProjectsSectionProps) => {
     <div className="mb-10">
       <div className="flex items-center justify-between mb-6">
         <h2 className="text-xl font-semibold">Recent Projects</h2>
-        <Link to="/projects/create">
-          <Button 
-            variant="primary"
-            size="sm"
-            leftIcon={<Plus size={16} />}
-          >
-            New Project
-          </Button>
-        </Link>
+        <div className="flex gap-2">
+          {userRole === 'authority' && (
+            <Link to="/projects/1/review">
+              <Button 
+                variant="outline"
+                size="sm"
+                leftIcon={<ShieldCheck size={16} />}
+              >
+                Pending Reviews
+              </Button>
+            </Link>
+          )}
+          {userRole !== 'authority' && (
+            <Link to="/projects/create">
+              <Button 
+                variant="primary"
+                size="sm"
+                leftIcon={<Plus size={16} />}
+              >
+                New Project
+              </Button>
+            </Link>
+          )}
+        </div>
       </div>
       
       {isLoading ? (
