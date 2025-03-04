@@ -1,23 +1,48 @@
 
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { KeyRound, User, Lock, ArrowRight } from 'lucide-react';
+import { KeyRound, User, Lock, ArrowRight, CheckCircle } from 'lucide-react';
 import MainLayout from '@/components/layout/MainLayout';
 import Button from '@/components/ui/custom/Button';
 
+type UserRole = 'developer' | 'qp' | 'authority' | '';
+
 const Login = () => {
   const [isLoading, setIsLoading] = useState(false);
+  const [selectedRole, setSelectedRole] = useState<UserRole>('');
   const navigate = useNavigate();
 
   const handleMyDigitalLogin = () => {
+    if (!selectedRole) {
+      // Show an error or notification that role selection is required
+      alert('Please select a role to continue');
+      return;
+    }
+    
     setIsLoading(true);
     
     // Simulate authentication process
     setTimeout(() => {
       setIsLoading(false);
+      // Store role in sessionStorage for persistence across the app
+      sessionStorage.setItem('userRole', selectedRole);
       navigate('/dashboard');
     }, 1500);
   };
+
+  const RoleOption = ({ role, label }: { role: UserRole, label: string }) => (
+    <div 
+      className={`flex items-center p-3 border rounded-md cursor-pointer transition-all ${
+        selectedRole === role 
+          ? 'border-primary bg-primary/10' 
+          : 'border-border hover:border-primary/50'
+      }`}
+      onClick={() => setSelectedRole(role)}
+    >
+      {selectedRole === role && <CheckCircle className="h-4 w-4 text-primary mr-2" />}
+      <span>{label}</span>
+    </div>
+  );
 
   return (
     <MainLayout showNav={false}>
@@ -33,6 +58,16 @@ const Login = () => {
             </div>
             
             <div className="space-y-6">
+              {/* Role Selection */}
+              <div className="space-y-2 mb-4">
+                <label className="text-sm font-medium">Select Your Role</label>
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-2">
+                  <RoleOption role="developer" label="Developer" />
+                  <RoleOption role="qp" label="QP" />
+                  <RoleOption role="authority" label="Local Authority" />
+                </div>
+              </div>
+              
               <Button
                 variant="primary"
                 fullWidth
