@@ -1,6 +1,5 @@
-
 import { useState, useRef, useEffect } from 'react';
-import { Send, X, MessageSquare } from 'lucide-react';
+import { Send, X, MessageSquare, RotateCcw } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import Button from '@/components/ui/custom/Button';
 
@@ -30,6 +29,10 @@ const ChatBot = () => {
       messagesEndRef.current.scrollIntoView({ behavior: 'smooth' });
     }
   }, [messages]);
+
+  const resetChat = () => {
+    setMessages([INITIAL_MESSAGE]);
+  };
 
   async function query(data: { question: string }) {
     try {
@@ -122,12 +125,21 @@ const ChatBot = () => {
           <div className="bg-primary text-primary-foreground p-3 flex items-center">
             <MessageSquare size={18} className="mr-2" />
             <h3 className="font-medium">CIDB ChatBot</h3>
-            <button 
-              onClick={() => setIsOpen(false)}
-              className="ml-auto text-primary-foreground/80 hover:text-primary-foreground"
-            >
-              <X size={18} />
-            </button>
+            <div className="ml-auto flex items-center gap-2">
+              <button 
+                onClick={resetChat}
+                className="text-primary-foreground/80 hover:text-primary-foreground"
+                title="Clear chat"
+              >
+                <RotateCcw size={16} />
+              </button>
+              <button 
+                onClick={() => setIsOpen(false)}
+                className="text-primary-foreground/80 hover:text-primary-foreground"
+              >
+                <X size={18} />
+              </button>
+            </div>
           </div>
           
           {/* Messages */}
