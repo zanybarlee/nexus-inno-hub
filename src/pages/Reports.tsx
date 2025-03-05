@@ -1,4 +1,3 @@
-
 import { useState, useEffect } from 'react';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import MainLayout from '@/components/layout/MainLayout';
@@ -52,19 +51,19 @@ const Reports = () => {
       {
         project: 'Penang Heritage Renovation',
         issue: 'Fire escape routes not clearly marked in model',
-        severity: 'high',
+        severity: 'high' as const,
         date: '2 days ago'
       },
       {
         project: 'KL Tower Development',
         issue: 'Electrical load calculations need revision',
-        severity: 'medium',
+        severity: 'medium' as const,
         date: '4 days ago'
       },
       {
         project: 'Johor Bahru Waterfront',
         issue: 'Minor accessibility ramp grade issues',
-        severity: 'low',
+        severity: 'low' as const,
         date: '1 week ago'
       }
     ]
