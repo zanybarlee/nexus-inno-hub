@@ -1,4 +1,6 @@
 
+import Button from '@/components/ui/custom/Button';
+
 interface Document {
   name: string;
   type: string;
