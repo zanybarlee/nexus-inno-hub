@@ -78,7 +78,8 @@ const ResizableIframe: React.FC<ResizableIframeProps> = ({
               src={url} 
               className="w-full h-full border-none"
               title="Voice Bot"
-              sandbox="allow-same-origin allow-scripts allow-popups allow-forms"
+              allow="microphone; camera; autoplay; clipboard-write; encrypted-media"
+              sandbox="allow-same-origin allow-scripts allow-popups allow-forms allow-downloads"
             />
           </div>
           
