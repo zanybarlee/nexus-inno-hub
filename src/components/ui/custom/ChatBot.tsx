@@ -1,3 +1,4 @@
+
 import { useState, useRef, useEffect } from 'react';
 import { Send, X, MessageSquare, RotateCcw, Maximize2, Minimize2, Move } from 'lucide-react';
 import { cn } from '@/lib/utils';
@@ -44,8 +45,14 @@ const ChatBot = () => {
     x: 0,
     y: 0
   });
+  const [sessionId, setSessionId] = useState<string>('');
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const chatWindowRef = useRef<HTMLDivElement>(null);
+
+  // Generate a unique session ID when the component mounts
+  useEffect(() => {
+    setSessionId(`user_${Date.now()}_${Math.random().toString(36).substring(2, 9)}`);
+  }, []);
 
   useEffect(() => {
     if (messagesEndRef.current) {
@@ -97,6 +104,8 @@ const ChatBot = () => {
 
   const resetChat = () => {
     setMessages([INITIAL_MESSAGE]);
+    // Generate a new session ID when chat is reset
+    setSessionId(`user_${Date.now()}_${Math.random().toString(36).substring(2, 9)}`);
   };
 
   const handleDragStart = (e: React.MouseEvent) => {
@@ -136,6 +145,9 @@ const ChatBot = () => {
 
   async function query(data: {
     question: string;
+    overrideConfig?: {
+      sessionId: string;
+    };
   }) {
     try {
       const response = await fetch("http://127.0.0.1:3001/api/v1/prediction/a3e43eff-de44-4e96-a88e-4f4b53cf5bb5", {
@@ -169,7 +181,10 @@ const ChatBot = () => {
     setIsLoading(true);
     try {
       const response = await query({
-        question: input
+        question: input,
+        overrideConfig: {
+          sessionId: sessionId
+        }
       });
       const botMessage: Message = {
         id: (Date.now() + 1).toString(),
