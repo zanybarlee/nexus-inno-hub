@@ -1,4 +1,3 @@
-
 import { useState, useEffect } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { ArrowLeft, Users, MessageSquare, Eye, Upload, PanelLeft, PanelRight, FileText, Send, Paperclip, X } from 'lucide-react';
@@ -37,13 +36,13 @@ const QPCollaboration = () => {
   
   // Mock messages
   const mockMessages = [
-    { id: '1', sender: 'Ahmad (QP)', time: '10:30 AM', content: 'I've reviewed the structural plans and have some concerns about the load-bearing walls on levels 5-8.', type: 'text' },
+    { id: '1', sender: 'Ahmad (QP)', time: '10:30 AM', content: "I've reviewed the structural plans and have some concerns about the load-bearing walls on levels 5-8.", type: 'text' },
     { id: '2', sender: 'Sarah (Developer)', time: '10:35 AM', content: 'Thanks for the feedback. Can you highlight the specific areas in the BIM model?', type: 'text' },
     { id: '3', sender: 'System', time: '10:38 AM', content: 'Ahmad (QP) has shared a document: Structural Analysis Report', type: 'system' },
-    { id: '4', sender: 'Ahmad (QP)', time: '10:40 AM', content: 'I've annotated the areas of concern in the attached report. We'll need to revise the column placement.', type: 'text' },
-    { id: '5', sender: 'Li Wei (Engineer)', time: '10:45 AM', content: 'I can work on revising the structural design. What's the timeline for this?', type: 'text' },
+    { id: '4', sender: 'Ahmad (QP)', time: '10:40 AM', content: "I've annotated the areas of concern in the attached report. We'll need to revise the column placement.", type: 'text' },
+    { id: '5', sender: 'Li Wei (Engineer)', time: '10:45 AM', content: "I can work on revising the structural design. What's the timeline for this?", type: 'text' },
     { id: '6', sender: 'Sarah (Developer)', time: '10:47 AM', content: 'We should aim to have the revised plans by end of week. The authority review is scheduled for next Tuesday.', type: 'text' },
-    { id: '7', sender: 'Michael (Architect)', time: '11:00 AM', content: 'Adjusting the column placement might affect the lobby layout. I'll review the changes once Li Wei has updated the structural plans.', type: 'text' }
+    { id: '7', sender: 'Michael (Architect)', time: '11:00 AM', content: "Adjusting the column placement might affect the lobby layout. I'll review the changes once Li Wei has updated the structural plans.", type: 'text' }
   ];
   
   useEffect(() => {
