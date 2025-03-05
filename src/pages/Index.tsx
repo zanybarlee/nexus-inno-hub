@@ -1,10 +1,11 @@
 
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { CheckCircle, Upload, LayoutDashboard, Users, FileText, BarChart3, Zap } from 'lucide-react';
 import MainLayout from '@/components/layout/MainLayout';
 import HeroSection from '@/components/ui/custom/HeroSection';
 import FeatureCard from '@/components/ui/custom/FeatureCard';
+import ResizableIframe from '@/components/ui/custom/ResizableIframe';
 
 const features = [
   {
@@ -40,6 +41,8 @@ const features = [
 ];
 
 const Index = () => {
+  const [showIframe, setShowIframe] = useState(true);
+
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
@@ -49,6 +52,13 @@ const Index = () => {
       <div className="pt-16">
         {/* Hero Section */}
         <HeroSection />
+        
+        {/* External Content Iframe */}
+        {showIframe && (
+          <div className="container max-w-7xl mx-auto px-4 py-6">
+            <ResizableIframe url="http://localhost:3005/" initialWidth={800} initialHeight={500} />
+          </div>
+        )}
         
         {/* Features Section */}
         <section className="py-20 bg-secondary/40">
