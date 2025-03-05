@@ -1,7 +1,7 @@
 
 import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { Plus, ShieldCheck } from 'lucide-react';
+import { Plus, ShieldCheck, Clipboard } from 'lucide-react';
 import Button from '@/components/ui/custom/Button';
 import ProjectCard from '@/components/ui/custom/ProjectCard';
 
@@ -81,6 +81,17 @@ const ProjectsSection = ({ isLoading }: ProjectsSectionProps) => {
                 leftIcon={<ShieldCheck size={16} />}
               >
                 Pending Reviews
+              </Button>
+            </Link>
+          )}
+          {userRole === 'qp' && (
+            <Link to="/qp/dashboard">
+              <Button 
+                variant="outline"
+                size="sm"
+                leftIcon={<Clipboard size={16} />}
+              >
+                QP Dashboard
               </Button>
             </Link>
           )}

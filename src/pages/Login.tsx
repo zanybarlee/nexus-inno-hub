@@ -26,7 +26,13 @@ const Login = () => {
       setIsLoading(false);
       // Store role in sessionStorage for persistence across the app
       sessionStorage.setItem('userRole', selectedRole);
-      navigate('/dashboard');
+      
+      // Route to different dashboards based on role
+      if (selectedRole === 'qp') {
+        navigate('/qp/dashboard');
+      } else {
+        navigate('/dashboard');
+      }
     }, 1500);
   };
 

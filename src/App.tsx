@@ -14,6 +14,9 @@ import CreateProject from "./pages/CreateProject";
 import ProjectUpload from "./pages/ProjectUpload";
 import ProjectDetail from "./pages/ProjectDetail";
 import ComplianceReview from "./pages/ComplianceReview";
+import QPDashboard from "./pages/qp/QPDashboard";
+import QPProjectDetail from "./pages/qp/QPProjectDetail";
+import QPCollaboration from "./pages/qp/QPCollaboration";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -32,6 +35,9 @@ const App = () => (
           <Route path="/projects/:projectId" element={<ProjectDetail />} />
           <Route path="/projects/:projectId/review" element={<ComplianceReview />} />
           <Route path="/upload" element={<ProjectUpload />} />
+          <Route path="/qp/dashboard" element={<QPDashboard />} />
+          <Route path="/qp/projects/:projectId" element={<QPProjectDetail />} />
+          <Route path="/qp/collaboration/:projectId" element={<QPCollaboration />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
         </Routes>
