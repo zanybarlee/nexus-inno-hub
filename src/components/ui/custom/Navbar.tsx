@@ -42,7 +42,7 @@ const Navbar = () => {
             to="/"
             className="font-bold text-xl flex items-center"
           >
-            <span className="text-primary">NBeS</span>
+            <span className="text-primary">Nexus</span>
             <span className="ml-1">Portal</span>
           </Link>
           

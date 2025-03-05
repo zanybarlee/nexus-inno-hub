@@ -18,7 +18,7 @@ export default function MainLayout({ children, showNav = true }: MainLayoutProps
         <div className="container max-w-7xl mx-auto px-4">
           <div className="flex flex-col md:flex-row justify-between items-center space-y-4 md:space-y-0">
             <div className="text-sm text-muted-foreground">
-              © {new Date().getFullYear()} Enhanced NBeS Portal. All rights reserved.
+              © {new Date().getFullYear()} Enhanced Nexus Portal. All rights reserved.
             </div>
             <div className="flex items-center space-x-4">
               <a href="#" className="text-sm text-muted-foreground hover:text-foreground transition-colors">

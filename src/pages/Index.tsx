@@ -139,7 +139,7 @@ const Index = () => {
               <Zap className="w-12 h-12 mx-auto mb-6" />
               <h2 className="text-3xl md:text-4xl font-bold mb-6">Ready to Streamline Your Building Submissions?</h2>
               <p className="text-xl opacity-90 mb-8">
-                Join hundreds of developers and authorities already using the enhanced NBeS Portal
+                Join hundreds of developers and authorities already using the enhanced Nexus Portal
               </p>
               <div className="flex flex-col sm:flex-row justify-center gap-4">
                 <Link 

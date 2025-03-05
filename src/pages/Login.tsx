@@ -59,7 +59,7 @@ const Login = () => {
               <div className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-primary/10 mb-6">
                 <KeyRound className="h-8 w-8 text-primary" />
               </div>
-              <h1 className="text-2xl md:text-3xl font-bold">Welcome to NBeS Portal</h1>
+              <h1 className="text-2xl md:text-3xl font-bold">Welcome to Nexus Portal</h1>
               <p className="text-muted-foreground mt-2">Sign in to access your account</p>
             </div>
             
