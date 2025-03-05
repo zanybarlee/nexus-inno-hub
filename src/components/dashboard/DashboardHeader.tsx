@@ -29,29 +29,29 @@ const DashboardHeader = () => {
   };
 
   return (
-    <div className="mb-8">
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between mb-4">
-        <div className="flex items-center gap-3">
-          <UserAvatar role={userRole} size={32} />
-          <div>
-            <h1 className="text-3xl font-bold mb-2">Dashboard</h1>
-            <p className="text-muted-foreground">
-              Welcome back, <span className="font-medium">{getRoleDisplay()}</span>. Manage your building submissions and track progress.
-            </p>
-          </div>
-        </div>
-        
-        {userRole === 'developer' && (
-          <Link to="/projects/create" className="mt-4 sm:mt-0">
-            <Button 
-              variant="primary"
-              size="sm"
-              leftIcon={<Plus size={16} />}
-            >
-              New Project
-            </Button>
-          </Link>
-        )}
+    <div className="flex flex-col md:flex-row md:items-center md:justify-between mb-8">
+      <div>
+        <h1 className="text-3xl font-bold">Welcome back, John!</h1>
+        <p className="text-muted-foreground mt-1">Track your projects and compliance status</p>
+      </div>
+      <div className="flex gap-2 mt-4 md:mt-0">
+        <Link to="/reports">
+          <Button 
+            variant="outline"
+            size="sm"
+          >
+            View Reports
+          </Button>
+        </Link>
+        <Link to="/projects/create">
+          <Button 
+            variant="primary"
+            size="sm"
+            leftIcon={<Plus size={16} />}
+          >
+            New Project
+          </Button>
+        </Link>
       </div>
     </div>
   );
