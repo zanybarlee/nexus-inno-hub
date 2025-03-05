@@ -69,7 +69,6 @@ const ResizableIframe: React.FC<ResizableIframeProps> = ({
             isDetached={isDetached}
             onDragStart={handleDragStart}
             toggleDetached={toggleDetached}
-            toggleMinimized={toggleMinimized}
             handleClose={handleClose}
           />
           
