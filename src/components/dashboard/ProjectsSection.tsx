@@ -17,10 +17,12 @@ interface Project {
 
 interface ProjectsSectionProps {
   isLoading: boolean;
+  filterStatus?: string;
 }
 
-const ProjectsSection = ({ isLoading }: ProjectsSectionProps) => {
+const ProjectsSection = ({ isLoading, filterStatus = 'all' }: ProjectsSectionProps) => {
   const [userRole, setUserRole] = useState<string>('');
+  const [filteredProjects, setFilteredProjects] = useState<Project[]>([]);
   
   useEffect(() => {
     // Get user role from session storage or wherever it's stored
@@ -111,16 +113,35 @@ const ProjectsSection = ({ isLoading }: ProjectsSectionProps) => {
   // Select projects based on user role
   const projects = userRole === 'authority' ? authorityProjects : developerProjects;
 
-  // Get section title based on user role
-  const getSectionTitle = () => {
-    switch(userRole) {
-      case 'developer':
-        return 'Recent Projects';
-      case 'authority':
-        return 'Projects Awaiting Review';
-      default:
-        return 'Recent Projects';
+  useEffect(() => {
+    // Filter projects based on the filterStatus parameter
+    if (filterStatus === 'all') {
+      setFilteredProjects(projects);
+    } else if (filterStatus === 'pending') {
+      setFilteredProjects(projects.filter(p => p.status === 'pending'));
+    } else if (filterStatus === 'approved') {
+      setFilteredProjects(projects.filter(p => p.status === 'approved'));
+    } else if (filterStatus === 'issues') {
+      // For "issues", we'll assume it includes rejected projects and in-review projects
+      setFilteredProjects(projects.filter(p => p.status === 'rejected' || p.status === 'in-review'));
+    } else {
+      // If the filter doesn't match any known status, just show all projects
+      setFilteredProjects(projects);
     }
+  }, [filterStatus, projects]);
+
+  // Get section title based on user role and filter
+  const getSectionTitle = () => {
+    if (filterStatus === 'all') {
+      return userRole === 'authority' ? 'Projects Awaiting Review' : 'Recent Projects';
+    } else if (filterStatus === 'pending') {
+      return 'Pending Projects';
+    } else if (filterStatus === 'approved') {
+      return 'Approved Projects';
+    } else if (filterStatus === 'issues') {
+      return 'Projects with Compliance Issues';
+    }
+    return 'Recent Projects';
   };
 
   return (
@@ -186,19 +207,32 @@ const ProjectsSection = ({ isLoading }: ProjectsSectionProps) => {
         </div>
       ) : (
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
-          {projects.map((project, index) => (
-            <ProjectCard
-              key={project.id}
-              id={project.id}
-              title={project.title}
-              description={project.description}
-              status={project.status}
-              date={project.date}
-              members={project.members}
-              submissions={project.submissions}
-              index={index}
-            />
-          ))}
+          {filteredProjects.length > 0 ? (
+            filteredProjects.map((project, index) => (
+              <ProjectCard
+                key={project.id}
+                id={project.id}
+                title={project.title}
+                description={project.description}
+                status={project.status}
+                date={project.date}
+                members={project.members}
+                submissions={project.submissions}
+                index={index}
+              />
+            ))
+          ) : (
+            <div className="col-span-4 flex flex-col items-center justify-center py-10">
+              <p className="text-lg text-muted-foreground">No projects found matching the selected criteria.</p>
+              {userRole === 'developer' && (
+                <Link to="/projects/create" className="mt-4">
+                  <Button variant="primary" size="sm" leftIcon={<Plus size={16} />}>
+                    Create New Project
+                  </Button>
+                </Link>
+              )}
+            </div>
+          )}
         </div>
       )}
     </div>
