@@ -1,15 +1,19 @@
 
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Upload, CheckCircle, AlertCircle, Info, ArrowRight } from 'lucide-react';
+import { Upload, CheckCircle, AlertCircle, Info, ArrowRight, CreditCard, DollarSign } from 'lucide-react';
 import MainLayout from '@/components/layout/MainLayout';
 import UploadBox from '@/components/ui/custom/UploadBox';
 import Button from '@/components/ui/custom/Button';
+import PaymentRequiredStatus from '@/components/payment/PaymentRequiredStatus';
+import { toast } from 'sonner';
 
 const ProjectUpload = () => {
   const [files, setFiles] = useState<File[]>([]);
   const [isAnalyzing, setIsAnalyzing] = useState(false);
   const [analysisComplete, setAnalysisComplete] = useState(false);
+  const [paymentComplete, setPaymentComplete] = useState(false);
+  const [showPaymentSection, setShowPaymentSection] = useState(false);
   const [analysisResults, setAnalysisResults] = useState<{
     passed: string[];
     failed: string[];
@@ -49,6 +53,33 @@ const ProjectUpload = () => {
       });
     }, 3000);
   };
+
+  const handleProceedToPayment = () => {
+    setShowPaymentSection(true);
+  };
+
+  const handleProcessPayment = () => {
+    // Simulate payment processing
+    toast.loading('Processing payment...');
+    
+    setTimeout(() => {
+      toast.dismiss();
+      toast.success('Payment completed successfully');
+      setPaymentComplete(true);
+      setShowPaymentSection(false);
+    }, 2000);
+  };
+
+  const handleSubmitForReview = () => {
+    if (!paymentComplete) {
+      toast.error('Payment is required before submission');
+      setShowPaymentSection(true);
+      return;
+    }
+    
+    toast.success('Project submitted for review');
+    navigate('/dashboard');
+  };
   
   return (
     <MainLayout>
@@ -61,28 +92,30 @@ const ProjectUpload = () => {
           
           <div className="space-y-8">
             {/* Upload Box */}
-            <div className="bg-card rounded-xl border shadow-sm p-6 md:p-8 animate-scale-in">
-              <div className="space-y-6">
-                <div className="flex items-center">
-                  <Upload className="h-5 w-5 text-primary mr-2" />
-                  <h2 className="text-xl font-semibold">BIM Model Upload</h2>
-                </div>
-                
-                <UploadBox onFilesAdded={handleFilesAdded} />
-                
-                {files.length > 0 && !analysisComplete && (
-                  <div className="text-center mt-6">
-                    <Button
-                      variant="primary"
-                      onClick={handleAnalyzeModels}
-                      isLoading={isAnalyzing}
-                    >
-                      {isAnalyzing ? 'Analyzing...' : 'Analyze Models'}
-                    </Button>
+            {!analysisComplete && (
+              <div className="bg-card rounded-xl border shadow-sm p-6 md:p-8 animate-scale-in">
+                <div className="space-y-6">
+                  <div className="flex items-center">
+                    <Upload className="h-5 w-5 text-primary mr-2" />
+                    <h2 className="text-xl font-semibold">BIM Model Upload</h2>
                   </div>
-                )}
+                  
+                  <UploadBox onFilesAdded={handleFilesAdded} />
+                  
+                  {files.length > 0 && !analysisComplete && (
+                    <div className="text-center mt-6">
+                      <Button
+                        variant="primary"
+                        onClick={handleAnalyzeModels}
+                        isLoading={isAnalyzing}
+                      >
+                        {isAnalyzing ? 'Analyzing...' : 'Analyze Models'}
+                      </Button>
+                    </div>
+                  )}
+                </div>
               </div>
-            </div>
+            )}
             
             {/* Analysis Results */}
             {analysisComplete && (
@@ -136,25 +169,54 @@ const ProjectUpload = () => {
                     </p>
                   </div>
                   
-                  <div className="flex justify-end space-x-4">
-                    <Button 
-                      variant="outline" 
-                      type="button"
-                      onClick={() => {
-                        setAnalysisComplete(false);
-                        setFiles([]);
-                      }}
-                    >
-                      Upload New Models
-                    </Button>
-                    <Button 
-                      variant="primary"
-                      rightIcon={<ArrowRight size={18} />}
-                      onClick={() => navigate('/dashboard')}
-                    >
-                      Submit for Review
-                    </Button>
-                  </div>
+                  {!showPaymentSection && !paymentComplete && (
+                    <div className="flex justify-end space-x-4">
+                      <Button 
+                        variant="outline" 
+                        type="button"
+                        onClick={() => {
+                          setAnalysisComplete(false);
+                          setFiles([]);
+                        }}
+                      >
+                        Upload New Models
+                      </Button>
+                      <Button 
+                        variant="primary"
+                        rightIcon={<CreditCard size={18} />}
+                        onClick={handleProceedToPayment}
+                      >
+                        Proceed to Payment
+                      </Button>
+                    </div>
+                  )}
+
+                  {showPaymentSection && (
+                    <PaymentRequiredStatus onProcessPayment={handleProcessPayment} />
+                  )}
+                  
+                  {paymentComplete && (
+                    <div className="flex justify-end space-x-4">
+                      <Button 
+                        variant="outline" 
+                        type="button"
+                        onClick={() => {
+                          setAnalysisComplete(false);
+                          setFiles([]);
+                          setPaymentComplete(false);
+                        }}
+                      >
+                        Upload New Models
+                      </Button>
+                      <Button 
+                        variant="primary"
+                        rightIcon={<ArrowRight size={18} />}
+                        onClick={handleSubmitForReview}
+                      >
+                        Submit for Review
+                      </Button>
+                    </div>
+                  )}
                 </div>
               </div>
             )}
