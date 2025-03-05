@@ -1,12 +1,21 @@
 
 import { useState, useEffect } from 'react';
-import { Link, useLocation } from 'react-router-dom';
-import { Menu, X } from 'lucide-react';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
+import { Menu, X, LogOut } from 'lucide-react';
+import { toast } from '@/hooks/use-toast';
 
 const Navbar = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
   const location = useLocation();
+  const navigate = useNavigate();
+  
+  // Check login status on component mount and route changes
+  useEffect(() => {
+    const userRole = sessionStorage.getItem('userRole');
+    setIsLoggedIn(!!userRole);
+  }, [location.pathname]);
   
   // Handle scroll event to change navbar appearance
   useEffect(() => {
@@ -22,6 +31,21 @@ const Navbar = () => {
   useEffect(() => {
     setIsMobileMenuOpen(false);
   }, [location.pathname]);
+  
+  const handleLogout = () => {
+    // Clear user session
+    sessionStorage.removeItem('userRole');
+    setIsLoggedIn(false);
+    
+    // Show toast notification
+    toast({
+      title: "Logged out successfully",
+      description: "You have been logged out of your account"
+    });
+    
+    // Navigate to home page
+    navigate('/');
+  };
   
   const navLinks = [
     { name: 'Home', path: '/' },
@@ -59,12 +83,23 @@ const Navbar = () => {
                 {link.name}
               </Link>
             ))}
-            <Link
-              to="/login"
-              className="btn-primary inline-flex items-center justify-center"
-            >
-              Login
-            </Link>
+            
+            {isLoggedIn ? (
+              <button
+                onClick={handleLogout}
+                className="btn-primary inline-flex items-center justify-center gap-2"
+              >
+                <LogOut size={16} />
+                Logout
+              </button>
+            ) : (
+              <Link
+                to="/login"
+                className="btn-primary inline-flex items-center justify-center"
+              >
+                Login
+              </Link>
+            )}
           </div>
           
           {/* Mobile Menu Button */}
@@ -93,12 +128,23 @@ const Navbar = () => {
                 {link.name}
               </Link>
             ))}
-            <Link
-              to="/login"
-              className="btn-primary inline-flex items-center justify-center"
-            >
-              Login
-            </Link>
+            
+            {isLoggedIn ? (
+              <button
+                onClick={handleLogout}
+                className="btn-primary inline-flex items-center justify-center gap-2"
+              >
+                <LogOut size={16} />
+                Logout
+              </button>
+            ) : (
+              <Link
+                to="/login"
+                className="btn-primary inline-flex items-center justify-center"
+              >
+                Login
+              </Link>
+            )}
           </div>
         </div>
       )}
