@@ -84,6 +84,19 @@ export function useResizableIframe(initialWidth: number, initialHeight: number) 
     setIsMinimized(true);
   };
 
+  const handleButtonClick = () => {
+    setIsMinimized(false);
+    setIsDetached(true);
+    
+    // Center the iframe on the screen
+    const viewportWidth = window.innerWidth;
+    const viewportHeight = window.innerHeight;
+    setPosition({
+      x: Math.max(0, (viewportWidth - size.width) / 2),
+      y: Math.max(0, (viewportHeight - size.height) / 2)
+    });
+  };
+
   return {
     isDetached,
     isMinimized,
@@ -95,6 +108,7 @@ export function useResizableIframe(initialWidth: number, initialHeight: number) 
     toggleMinimized,
     handleClose,
     handleDragStart,
-    handleResizeStart
+    handleResizeStart,
+    handleButtonClick
   };
 }

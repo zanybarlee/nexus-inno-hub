@@ -22,14 +22,15 @@ const ResizableIframe: React.FC<ResizableIframeProps> = ({
     toggleMinimized,
     handleClose,
     handleDragStart,
-    handleResizeStart
+    handleResizeStart,
+    handleButtonClick
   } = useResizableIframe(initialWidth, initialHeight);
 
   return (
     <>
       {isMinimized && (
         <button 
-          onClick={toggleMinimized} 
+          onClick={handleButtonClick} 
           className="fixed bottom-5 right-5 z-40 flex items-center justify-center w-14 h-14 rounded-full shadow-lg bg-primary text-primary-foreground hover:bg-primary/90 transition-all"
           title="Open Voice Bot"
         >
