@@ -17,9 +17,10 @@ interface Project {
 
 interface ProjectsSectionProps {
   isLoading: boolean;
+  filter?: string;
 }
 
-const ProjectsSection = ({ isLoading }: ProjectsSectionProps) => {
+const ProjectsSection = ({ isLoading, filter }: ProjectsSectionProps) => {
   const [userRole, setUserRole] = useState<string>('');
   
   useEffect(() => {
@@ -71,7 +72,7 @@ const ProjectsSection = ({ isLoading }: ProjectsSectionProps) => {
   // Authority-focused projects (pending review)
   const authorityProjects: Project[] = [
     {
-      id: '5',
+      id: '1', // Changed from '5' to '1' to match the project in ProjectDetail.tsx
       title: 'Ipoh Commercial Center',
       description: 'New commercial district with offices and retail in Ipoh city center.',
       status: 'pending',
@@ -80,7 +81,7 @@ const ProjectsSection = ({ isLoading }: ProjectsSectionProps) => {
       submissions: 2
     },
     {
-      id: '6',
+      id: '1', // Changed from '6' to '1' to match the project in ProjectDetail.tsx
       title: 'Kuala Lumpur Tower Development',
       description: 'Mixed-use development with residential and commercial spaces in central KL.',
       status: 'in-review',
@@ -89,7 +90,7 @@ const ProjectsSection = ({ isLoading }: ProjectsSectionProps) => {
       submissions: 3
     },
     {
-      id: '7',
+      id: '2', // Changed from '7' to '2' to match the project in ProjectDetail.tsx
       title: 'Putrajaya Government Complex',
       description: 'New administrative offices for government agencies in Putrajaya.',
       status: 'pending',
@@ -98,7 +99,7 @@ const ProjectsSection = ({ isLoading }: ProjectsSectionProps) => {
       submissions: 3
     },
     {
-      id: '8',
+      id: '3', // Changed from '8' to '3' to match the project in ProjectDetail.tsx
       title: 'Melaka Heritage Hotel',
       description: 'Conversion of heritage buildings into a boutique hotel in Melaka.',
       status: 'in-review',
@@ -110,6 +111,22 @@ const ProjectsSection = ({ isLoading }: ProjectsSectionProps) => {
 
   // Select projects based on user role
   const projects = userRole === 'authority' ? authorityProjects : developerProjects;
+
+  // Filter projects if a filter is provided
+  const filteredProjects = filter 
+    ? projects.filter(project => {
+        switch(filter) {
+          case 'pending':
+            return project.status === 'pending';
+          case 'approved':
+            return project.status === 'approved';
+          case 'issues':
+            return project.status === 'rejected';
+          default:
+            return true;
+        }
+      })
+    : projects;
 
   // Get section title based on user role
   const getSectionTitle = () => {
@@ -186,7 +203,7 @@ const ProjectsSection = ({ isLoading }: ProjectsSectionProps) => {
         </div>
       ) : (
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
-          {projects.map((project, index) => (
+          {filteredProjects.map((project, index) => (
             <ProjectCard
               key={project.id}
               id={project.id}

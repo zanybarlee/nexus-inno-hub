@@ -1,14 +1,18 @@
 
 import { useState, useEffect } from 'react';
+import { useSearchParams } from 'react-router-dom';
 import MainLayout from '@/components/layout/MainLayout';
 import DashboardHeader from '@/components/dashboard/DashboardHeader';
 import StatsSection from '@/components/dashboard/StatsSection';
 import ProjectsSection from '@/components/dashboard/ProjectsSection';
 import ActivitySection from '@/components/dashboard/ActivitySection';
 import ProjectOverview from '@/components/dashboard/ProjectOverview';
+import { toast } from '@/hooks/use-toast';
 
 const Dashboard = () => {
   const [isLoading, setIsLoading] = useState(true);
+  const [searchParams] = useSearchParams();
+  const filter = searchParams.get('filter');
   
   useEffect(() => {
     // Simulate data loading
@@ -18,6 +22,16 @@ const Dashboard = () => {
     
     return () => clearTimeout(timer);
   }, []);
+  
+  useEffect(() => {
+    if (filter) {
+      const filterName = filter === 'issues' ? 'compliance issues' : filter;
+      toast({
+        title: `Showing ${filterName} projects`,
+        description: "Filtered view of your projects"
+      });
+    }
+  }, [filter]);
   
   return (
     <MainLayout>
@@ -30,7 +44,7 @@ const Dashboard = () => {
           <StatsSection isLoading={isLoading} />
           
           {/* Recent Projects */}
-          <ProjectsSection isLoading={isLoading} />
+          <ProjectsSection isLoading={isLoading} filter={filter || undefined} />
           
           {/* Activity and Summary */}
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
