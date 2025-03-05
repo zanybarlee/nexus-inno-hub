@@ -1,4 +1,3 @@
-
 import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { Plus, ShieldCheck, Clipboard, CheckCircle2, Clock, AlertCircle } from 'lucide-react';
@@ -72,16 +71,7 @@ const ProjectsSection = ({ isLoading, filter }: ProjectsSectionProps) => {
   // Authority-focused projects (pending review)
   const authorityProjects: Project[] = [
     {
-      id: '1', // Changed from '5' to '1' to match the project in ProjectDetail.tsx
-      title: 'Ipoh Commercial Center',
-      description: 'New commercial district with offices and retail in Ipoh city center.',
-      status: 'pending',
-      date: 'Dec 1, 2023',
-      members: 4,
-      submissions: 2
-    },
-    {
-      id: '1', // Changed from '6' to '1' to match the project in ProjectDetail.tsx
+      id: '1',
       title: 'Kuala Lumpur Tower Development',
       description: 'Mixed-use development with residential and commercial spaces in central KL.',
       status: 'in-review',
@@ -90,16 +80,25 @@ const ProjectsSection = ({ isLoading, filter }: ProjectsSectionProps) => {
       submissions: 3
     },
     {
-      id: '2', // Changed from '7' to '2' to match the project in ProjectDetail.tsx
-      title: 'Putrajaya Government Complex',
-      description: 'New administrative offices for government agencies in Putrajaya.',
+      id: '2',
+      title: 'Johor Bahru Waterfront Project',
+      description: 'Coastal development with residential units and a marina in JB.',
+      status: 'pending',
+      date: 'Nov 3, 2023',
+      members: 3,
+      submissions: 1
+    },
+    {
+      id: '3',
+      title: 'Penang Heritage Renovation',
+      description: 'Restoration of heritage buildings in Georgetown with modern amenities.',
       status: 'pending',
       date: 'Nov 20, 2023',
       members: 7,
       submissions: 3
     },
     {
-      id: '3', // Changed from '8' to '3' to match the project in ProjectDetail.tsx
+      id: '4',
       title: 'Melaka Heritage Hotel',
       description: 'Conversion of heritage buildings into a boutique hotel in Melaka.',
       status: 'in-review',
