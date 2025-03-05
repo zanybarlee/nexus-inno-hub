@@ -70,18 +70,18 @@ export const authorityProjects: Project[] = [
     submissions: 1
   },
   {
-    id: '3',
-    title: 'Penang Heritage Renovation',
-    description: 'Restoration of heritage buildings in Georgetown with modern amenities.',
-    status: 'pending',
-    date: 'Nov 20, 2023',
-    members: 7,
-    submissions: 3
+    id: '5',
+    title: 'Ipoh Office Park',
+    description: 'Modern office complex with sustainable design features in Ipoh.',
+    status: 'in-review',
+    date: 'Oct 25, 2023',
+    members: 4,
+    submissions: 2
   },
   {
-    id: '4',
-    title: 'Melaka Heritage Hotel',
-    description: 'Conversion of heritage buildings into a boutique hotel in Melaka.',
+    id: '6',
+    title: 'Malacca Heritage Hotel',
+    description: 'Conversion of heritage buildings into a boutique hotel in Malacca.',
     status: 'in-review',
     date: 'Nov 15, 2023',
     members: 3,

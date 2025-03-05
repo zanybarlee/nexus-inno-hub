@@ -71,10 +71,10 @@ const QPProjectsList = ({ isLoading, filterStatus }: QPProjectsListProps) => {
       id: '6',
       title: 'Malacca Heritage Hotel',
       description: 'Boutique hotel conversion of historic shophouses in Malacca.',
-      status: 'pending',
-      date: 'Nov 8, 2023',
+      status: 'in-review',
+      date: 'Nov 15, 2023',
       members: 3,
-      submissions: 1,
+      submissions: 2,
       comments: 4,
       dueDate: 'Dec 1, 2023'
     }

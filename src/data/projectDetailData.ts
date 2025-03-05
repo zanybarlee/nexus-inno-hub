@@ -115,5 +115,61 @@ export const projects = [
       { event: 'Technical Compliance Check', date: 'Dec 7, 2023', status: 'rejected' },
       { event: 'Resubmission', date: 'Jan 15, 2024', status: 'pending' }
     ]
+  },
+  {
+    id: '5',
+    title: 'Ipoh Office Park',
+    description: 'Modern office complex with sustainable design features in Ipoh.',
+    detailedDescription: 'The Ipoh Office Park is designed as a modern commercial hub with sustainable features including green roofs, energy-efficient systems, and natural ventilation. The development aims to create a comfortable working environment while minimizing environmental impact.',
+    status: 'in-review',
+    date: 'Oct 25, 2023',
+    submissionDate: 'Oct 22, 2023',
+    reviewDate: 'Oct 28, 2023',
+    estimatedCompletionDate: 'Feb 15, 2024',
+    members: 4,
+    submissions: 2,
+    location: 'Ipoh, Perak',
+    size: '75,000 sq ft',
+    budget: 'RM 150 million',
+    mainContractor: 'Perak Development Corporation',
+    architect: 'Sustainable Designs Sdn Bhd',
+    documents: [
+      { name: 'Sustainability Assessment', type: 'report', date: 'Oct 20, 2023', status: 'approved' },
+      { name: 'BIM Model v2', type: 'model', date: 'Oct 22, 2023', status: 'pending' }
+    ],
+    timeline: [
+      { event: 'Project Submission', date: 'Oct 22, 2023', status: 'completed' },
+      { event: 'Initial Review', date: 'Oct 28, 2023', status: 'completed' },
+      { event: 'Technical Compliance Check', date: 'Nov 5, 2023', status: 'in-progress' },
+      { event: 'Final Approval', date: 'Nov 15, 2023', status: 'pending' }
+    ]
+  },
+  {
+    id: '6',
+    title: 'Malacca Heritage Hotel',
+    description: 'Boutique hotel conversion of historic shophouses in Malacca.',
+    detailedDescription: 'This project involves the careful conversion of historic shophouses in Malacca into a boutique hotel while preserving their heritage value. The design respects the original architecture and integrates modern amenities sensitively to create a unique guest experience.',
+    status: 'in-review',
+    date: 'Nov 15, 2023',
+    submissionDate: 'Nov 10, 2023',
+    reviewDate: 'Nov 18, 2023',
+    estimatedCompletionDate: 'Apr 20, 2024',
+    members: 3,
+    submissions: 2,
+    location: 'Jonker Street, Malacca',
+    size: '25,000 sq ft',
+    budget: 'RM 90 million',
+    mainContractor: 'Malacca Heritage Builders',
+    architect: 'Conservation Architecture Group',
+    documents: [
+      { name: 'Heritage Conservation Plan', type: 'plan', date: 'Nov 8, 2023', status: 'approved' },
+      { name: 'BIM Model v1', type: 'model', date: 'Nov 10, 2023', status: 'pending' }
+    ],
+    timeline: [
+      { event: 'Project Submission', date: 'Nov 10, 2023', status: 'completed' },
+      { event: 'Initial Review', date: 'Nov 18, 2023', status: 'completed' },
+      { event: 'Technical Compliance Check', date: 'Nov 25, 2023', status: 'in-progress' },
+      { event: 'Final Approval', date: 'Dec 10, 2023', status: 'pending' }
+    ]
   }
 ];
