@@ -55,9 +55,12 @@ const Navbar = () => {
   const getNavLinks = () => {
     const commonLinks = [
       { name: 'Home', path: '/' },
-      { name: 'Dashboard', path: '/dashboard' },
-      { name: 'Reports', path: '/reports' },
     ];
+    
+    if (isLoggedIn) {
+      commonLinks.push({ name: 'Dashboard', path: '/dashboard' });
+      commonLinks.push({ name: 'Reports', path: '/reports' });
+    }
     
     if (userRole === 'developer') {
       return [
@@ -77,11 +80,8 @@ const Navbar = () => {
       ];
     }
     
-    // Default links for non-logged in users or unknown roles
-    return [
-      { name: 'Home', path: '/' },
-      { name: 'Login', path: '/login' },
-    ];
+    // Default links for non-logged in users
+    return commonLinks;
   };
   
   const navLinks = getNavLinks();
