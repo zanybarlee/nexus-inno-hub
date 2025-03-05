@@ -1,8 +1,9 @@
 
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { Plus, User } from 'lucide-react';
+import { Plus } from 'lucide-react';
 import Button from '@/components/ui/custom/Button';
+import UserAvatar from '@/components/ui/custom/UserAvatar';
 
 type UserRole = 'developer' | 'qp' | 'authority' | '';
 
@@ -30,11 +31,14 @@ const DashboardHeader = () => {
   return (
     <div className="mb-8">
       <div className="flex flex-col sm:flex-row sm:items-center justify-between mb-4">
-        <div>
-          <h1 className="text-3xl font-bold mb-2">Dashboard</h1>
-          <p className="text-muted-foreground">
-            Welcome back, <span className="font-medium">{getRoleDisplay()}</span>. Manage your building submissions and track progress.
-          </p>
+        <div className="flex items-center gap-3">
+          <UserAvatar role={userRole} size={32} />
+          <div>
+            <h1 className="text-3xl font-bold mb-2">Dashboard</h1>
+            <p className="text-muted-foreground">
+              Welcome back, <span className="font-medium">{getRoleDisplay()}</span>. Manage your building submissions and track progress.
+            </p>
+          </div>
         </div>
         
         {userRole === 'developer' && (

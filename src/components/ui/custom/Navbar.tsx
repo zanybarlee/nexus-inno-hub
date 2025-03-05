@@ -1,20 +1,22 @@
-
 import { useState, useEffect } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { Menu, X, LogOut } from 'lucide-react';
 import { toast } from '@/hooks/use-toast';
+import UserAvatar from './UserAvatar';
 
 const Navbar = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [userRole, setUserRole] = useState('');
   const location = useLocation();
   const navigate = useNavigate();
   
   // Check login status on component mount and route changes
   useEffect(() => {
-    const userRole = sessionStorage.getItem('userRole');
-    setIsLoggedIn(!!userRole);
+    const role = sessionStorage.getItem('userRole');
+    setIsLoggedIn(!!role);
+    setUserRole(role || '');
   }, [location.pathname]);
   
   // Handle scroll event to change navbar appearance
@@ -36,6 +38,7 @@ const Navbar = () => {
     // Clear user session
     sessionStorage.removeItem('userRole');
     setIsLoggedIn(false);
+    setUserRole('');
     
     // Show toast notification
     toast({
@@ -85,13 +88,19 @@ const Navbar = () => {
             ))}
             
             {isLoggedIn ? (
-              <button
-                onClick={handleLogout}
-                className="btn-primary inline-flex items-center justify-center gap-2"
-              >
-                <LogOut size={16} />
-                Logout
-              </button>
+              <div className="flex items-center gap-2">
+                <div className="flex items-center gap-2 mr-2">
+                  <UserAvatar role={userRole as any} size={20} />
+                  <span className="text-sm font-medium capitalize">{userRole}</span>
+                </div>
+                <button
+                  onClick={handleLogout}
+                  className="btn-primary inline-flex items-center justify-center gap-2"
+                >
+                  <LogOut size={16} />
+                  Logout
+                </button>
+              </div>
             ) : (
               <Link
                 to="/login"
@@ -130,13 +139,19 @@ const Navbar = () => {
             ))}
             
             {isLoggedIn ? (
-              <button
-                onClick={handleLogout}
-                className="btn-primary inline-flex items-center justify-center gap-2"
-              >
-                <LogOut size={16} />
-                Logout
-              </button>
+              <div className="flex flex-col space-y-3">
+                <div className="flex items-center gap-2">
+                  <UserAvatar role={userRole as any} size={20} />
+                  <span className="text-sm font-medium capitalize">{userRole}</span>
+                </div>
+                <button
+                  onClick={handleLogout}
+                  className="btn-primary inline-flex items-center justify-center gap-2"
+                >
+                  <LogOut size={16} />
+                  Logout
+                </button>
+              </div>
             ) : (
               <Link
                 to="/login"
