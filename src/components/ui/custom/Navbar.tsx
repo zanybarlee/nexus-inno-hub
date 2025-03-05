@@ -1,6 +1,7 @@
+
 import { useState, useEffect } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
-import { Menu, X, LogOut } from 'lucide-react';
+import { Menu, X, LogOut, FileText } from 'lucide-react';
 import { toast } from '@/hooks/use-toast';
 import UserAvatar from './UserAvatar';
 
@@ -50,12 +51,40 @@ const Navbar = () => {
     navigate('/');
   };
   
-  const navLinks = [
-    { name: 'Home', path: '/' },
-    { name: 'Dashboard', path: '/dashboard' },
-    { name: 'Projects', path: '/projects/create' },
-    { name: 'Upload', path: '/upload' },
-  ];
+  // Get nav links based on user role
+  const getNavLinks = () => {
+    const commonLinks = [
+      { name: 'Home', path: '/' },
+      { name: 'Dashboard', path: '/dashboard' },
+      { name: 'Reports', path: '/reports' },
+    ];
+    
+    if (userRole === 'developer') {
+      return [
+        ...commonLinks,
+        { name: 'Projects', path: '/projects/create' },
+        { name: 'Upload', path: '/upload' },
+      ];
+    } else if (userRole === 'authority') {
+      return [
+        ...commonLinks,
+        { name: 'Reviews', path: '/projects/1/review' },
+      ];
+    } else if (userRole === 'qp') {
+      return [
+        ...commonLinks,
+        { name: 'QP Dashboard', path: '/qp/dashboard' },
+      ];
+    }
+    
+    // Default links for non-logged in users or unknown roles
+    return [
+      { name: 'Home', path: '/' },
+      { name: 'Login', path: '/login' },
+    ];
+  };
+  
+  const navLinks = getNavLinks();
   
   return (
     <nav 

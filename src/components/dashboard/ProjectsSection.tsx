@@ -1,7 +1,7 @@
 
 import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { Plus, ShieldCheck, Clipboard } from 'lucide-react';
+import { Plus, ShieldCheck, Clipboard, CheckCircle2, Clock, AlertCircle } from 'lucide-react';
 import Button from '@/components/ui/custom/Button';
 import ProjectCard from '@/components/ui/custom/ProjectCard';
 
@@ -28,8 +28,8 @@ const ProjectsSection = ({ isLoading }: ProjectsSectionProps) => {
     setUserRole(role);
   }, []);
 
-  // Mock data
-  const projects: Project[] = [
+  // Developer-focused projects
+  const developerProjects: Project[] = [
     {
       id: '1',
       title: 'Kuala Lumpur Tower Development',
@@ -68,10 +68,79 @@ const ProjectsSection = ({ isLoading }: ProjectsSectionProps) => {
     }
   ];
 
+  // Authority-focused projects (pending review)
+  const authorityProjects: Project[] = [
+    {
+      id: '5',
+      title: 'Ipoh Commercial Center',
+      description: 'New commercial district with offices and retail in Ipoh city center.',
+      status: 'pending',
+      date: 'Dec 1, 2023',
+      members: 4,
+      submissions: 2
+    },
+    {
+      id: '6',
+      title: 'Kuala Lumpur Tower Development',
+      description: 'Mixed-use development with residential and commercial spaces in central KL.',
+      status: 'in-review',
+      date: 'Oct 12, 2023',
+      members: 5,
+      submissions: 3
+    },
+    {
+      id: '7',
+      title: 'Putrajaya Government Complex',
+      description: 'New administrative offices for government agencies in Putrajaya.',
+      status: 'pending',
+      date: 'Nov 20, 2023',
+      members: 7,
+      submissions: 3
+    },
+    {
+      id: '8',
+      title: 'Melaka Heritage Hotel',
+      description: 'Conversion of heritage buildings into a boutique hotel in Melaka.',
+      status: 'in-review',
+      date: 'Nov 15, 2023',
+      members: 3,
+      submissions: 2
+    }
+  ];
+
+  // Select projects based on user role
+  const projects = userRole === 'authority' ? authorityProjects : developerProjects;
+
+  // Get section title based on user role
+  const getSectionTitle = () => {
+    switch(userRole) {
+      case 'developer':
+        return 'Recent Projects';
+      case 'authority':
+        return 'Projects Awaiting Review';
+      default:
+        return 'Recent Projects';
+    }
+  };
+
   return (
     <div className="mb-10">
       <div className="flex items-center justify-between mb-6">
-        <h2 className="text-xl font-semibold">Recent Projects</h2>
+        <div className="flex items-center gap-2">
+          <h2 className="text-xl font-semibold">{getSectionTitle()}</h2>
+          {userRole === 'authority' && (
+            <div className="flex gap-2 ml-4">
+              <div className="flex items-center gap-1 text-sm text-muted-foreground">
+                <Clock size={14} className="text-yellow-500" />
+                <span>Pending: {projects.filter(p => p.status === 'pending').length}</span>
+              </div>
+              <div className="flex items-center gap-1 text-sm text-muted-foreground">
+                <AlertCircle size={14} className="text-blue-500" />
+                <span>In Review: {projects.filter(p => p.status === 'in-review').length}</span>
+              </div>
+            </div>
+          )}
+        </div>
         <div className="flex gap-2">
           {userRole === 'authority' && (
             <Link to="/projects/1/review">
@@ -95,7 +164,7 @@ const ProjectsSection = ({ isLoading }: ProjectsSectionProps) => {
               </Button>
             </Link>
           )}
-          {userRole !== 'authority' && (
+          {userRole === 'developer' && (
             <Link to="/projects/create">
               <Button 
                 variant="primary"
