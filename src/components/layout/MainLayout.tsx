@@ -1,6 +1,7 @@
 
 import { ReactNode } from 'react';
 import Navbar from '../ui/custom/Navbar';
+import ResizableIframe from '../ui/custom/ResizableIframe';
 
 interface MainLayoutProps {
   children: ReactNode;
@@ -34,6 +35,9 @@ export default function MainLayout({ children, showNav = true }: MainLayoutProps
           </div>
         </div>
       </footer>
+
+      {/* Add ResizableIframe here so it appears on all pages */}
+      <ResizableIframe url="http://localhost:3005/" initialWidth={800} initialHeight={500} />
     </div>
   );
 }

@@ -4,7 +4,6 @@ import { CheckCircle, Upload, LayoutDashboard, Users, FileText, BarChart3, Zap }
 import MainLayout from '@/components/layout/MainLayout';
 import HeroSection from '@/components/ui/custom/HeroSection';
 import FeatureCard from '@/components/ui/custom/FeatureCard';
-import ResizableIframe from '@/components/ui/custom/ResizableIframe';
 
 const features = [
   {
@@ -49,11 +48,6 @@ const Index = () => {
       <div className="pt-16">
         {/* Hero Section */}
         <HeroSection />
-        
-        {/* VoiceBot will now be minimized by default, showing only the button */}
-        <div className="container max-w-7xl mx-auto px-4 py-6">
-          <ResizableIframe url="http://localhost:3005/" initialWidth={800} initialHeight={500} />
-        </div>
         
         {/* Features Section */}
         <section className="py-20 bg-secondary/40">
