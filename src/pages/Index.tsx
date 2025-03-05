@@ -1,4 +1,3 @@
-
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { CheckCircle, Upload, LayoutDashboard, Users, FileText, BarChart3, Zap } from 'lucide-react';
@@ -54,11 +53,9 @@ const Index = () => {
         <HeroSection />
         
         {/* External Content Iframe */}
-        {showIframe && (
-          <div className="container max-w-7xl mx-auto px-4 py-6">
-            <ResizableIframe url="http://localhost:3005/" initialWidth={800} initialHeight={500} />
-          </div>
-        )}
+        <div className="container max-w-7xl mx-auto px-4 py-6">
+          <ResizableIframe url="http://localhost:3005/" initialWidth={800} initialHeight={500} />
+        </div>
         
         {/* Features Section */}
         <section className="py-20 bg-secondary/40">
