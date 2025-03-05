@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { CheckCircle, Upload, LayoutDashboard, Users, FileText, BarChart3, Zap } from 'lucide-react';
 import MainLayout from '@/components/layout/MainLayout';
@@ -40,8 +40,6 @@ const features = [
 ];
 
 const Index = () => {
-  const [showIframe, setShowIframe] = useState(true);
-
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
@@ -52,7 +50,7 @@ const Index = () => {
         {/* Hero Section */}
         <HeroSection />
         
-        {/* External Content Iframe */}
+        {/* VoiceBot will now be minimized by default, showing only the button */}
         <div className="container max-w-7xl mx-auto px-4 py-6">
           <ResizableIframe url="http://localhost:3005/" initialWidth={800} initialHeight={500} />
         </div>

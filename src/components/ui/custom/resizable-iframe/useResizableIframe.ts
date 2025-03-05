@@ -4,7 +4,7 @@ import { Position, Size, ResizeStart } from './types';
 
 export function useResizableIframe(initialWidth: number, initialHeight: number) {
   const [isDetached, setIsDetached] = useState(false);
-  const [isMinimized, setIsMinimized] = useState(false);
+  const [isMinimized, setIsMinimized] = useState(true); // Changed to true by default
   const [position, setPosition] = useState<Position>({ x: 20, y: 20 });
   const [size, setSize] = useState<Size>({ width: initialWidth, height: initialHeight });
   const [isDragging, setIsDragging] = useState(false);
