@@ -1,6 +1,6 @@
 
 import React from 'react';
-import { Move, Minimize2, Maximize2, X } from 'lucide-react';
+import { Move, Minimize2, Maximize2, X, Mic } from 'lucide-react';
 
 interface IframeHeaderProps {
   isDetached: boolean;
@@ -23,8 +23,8 @@ const IframeHeader: React.FC<IframeHeaderProps> = ({
       onMouseDown={onDragStart}
     >
       <div className="flex items-center">
-        <Move className="h-4 w-4 mr-2 text-muted-foreground" />
-        <span className="text-sm font-medium">External Content</span>
+        <Mic className="h-4 w-4 mr-2 text-primary" />
+        <span className="text-sm font-medium">Voice Bot</span>
       </div>
       <div className="flex items-center space-x-1">
         <button 

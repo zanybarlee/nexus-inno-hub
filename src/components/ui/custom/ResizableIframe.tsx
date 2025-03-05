@@ -1,6 +1,6 @@
 
 import React from 'react';
-import { Maximize2 } from 'lucide-react';
+import { Mic } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { useResizableIframe } from './resizable-iframe/useResizableIframe';
 import IframeHeader from './resizable-iframe/IframeHeader';
@@ -30,9 +30,10 @@ const ResizableIframe: React.FC<ResizableIframeProps> = ({
       {isMinimized && (
         <button 
           onClick={toggleMinimized} 
-          className="fixed bottom-20 right-5 z-40 flex items-center justify-center w-14 h-14 rounded-full shadow-lg bg-primary text-primary-foreground"
+          className="fixed bottom-5 right-5 z-40 flex items-center justify-center w-14 h-14 rounded-full shadow-lg bg-primary text-primary-foreground hover:bg-primary/90 transition-all"
+          title="Open Voice Bot"
         >
-          <Maximize2 className="h-6 w-6" />
+          <Mic className="h-6 w-6" />
         </button>
       )}
       
@@ -63,7 +64,7 @@ const ResizableIframe: React.FC<ResizableIframeProps> = ({
             <iframe 
               src={url} 
               className="w-full h-full border-none"
-              title="External Content"
+              title="Voice Bot"
               sandbox="allow-same-origin allow-scripts allow-popups allow-forms"
             />
           </div>
