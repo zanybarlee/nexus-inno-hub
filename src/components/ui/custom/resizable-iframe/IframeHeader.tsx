@@ -31,7 +31,7 @@ const IframeHeader: React.FC<IframeHeaderProps> = ({
             className="p-1 hover:bg-primary-foreground/10 rounded"
             title="Dock"
           >
-            <Minimize2 className="h-4 w-4" />
+            <Maximize2 className="h-4 w-4 rotate-180" />
           </button>
         ) : (
           <button 
