@@ -2,18 +2,22 @@ import { useState, useRef, useEffect } from 'react';
 import { Send, X, MessageSquare, RotateCcw, Maximize2, Minimize2, Move } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import Button from '@/components/ui/custom/Button';
+import ReactMarkdown from 'react-markdown';
+
 interface Message {
   id: string;
   content: string;
   sender: 'user' | 'bot';
   timestamp: Date;
 }
+
 const INITIAL_MESSAGE = {
   id: '0',
   content: 'Hello! I am the CIDB ChatBot. How can I assist you with your building submission today?',
   sender: 'bot' as const,
   timestamp: new Date()
 };
+
 const ChatBot = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [messages, setMessages] = useState<Message[]>([INITIAL_MESSAGE]);
@@ -27,7 +31,7 @@ const ChatBot = () => {
   const [size, setSize] = useState({
     width: 384,
     height: 384
-  }); // 384px is w-96
+  });
   const [isDragging, setIsDragging] = useState(false);
   const [dragStart, setDragStart] = useState({
     x: 0,
@@ -42,6 +46,7 @@ const ChatBot = () => {
   });
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const chatWindowRef = useRef<HTMLDivElement>(null);
+
   useEffect(() => {
     if (messagesEndRef.current) {
       messagesEndRef.current.scrollIntoView({
@@ -50,7 +55,6 @@ const ChatBot = () => {
     }
   }, [messages]);
 
-  // Handle document-level mouse events for dragging and resizing
   useEffect(() => {
     const handleMouseMove = (e: MouseEvent) => {
       if (isDragging) {
@@ -69,7 +73,6 @@ const ChatBot = () => {
         const dx = e.clientX - resizeStart.x;
         const dy = e.clientY - resizeStart.y;
 
-        // Minimum size constraints
         const newWidth = Math.max(280, resizeStart.width + dx);
         const newHeight = Math.max(300, resizeStart.height + dy);
         setSize({
@@ -91,9 +94,11 @@ const ChatBot = () => {
       document.removeEventListener('mouseup', handleMouseUp);
     };
   }, [isDragging, dragStart, isResizing, resizeStart]);
+
   const resetChat = () => {
     setMessages([INITIAL_MESSAGE]);
   };
+
   const handleDragStart = (e: React.MouseEvent) => {
     if (!isFloating) return;
     e.preventDefault();
@@ -103,6 +108,7 @@ const ChatBot = () => {
       y: e.clientY
     });
   };
+
   const handleResizeStart = (e: React.MouseEvent) => {
     if (!isFloating) return;
     e.preventDefault();
@@ -115,9 +121,9 @@ const ChatBot = () => {
       y: e.clientY
     });
   };
+
   const toggleFloatMode = () => {
     if (!isFloating) {
-      // When entering float mode, position it relative to viewport
       const viewportWidth = window.innerWidth;
       const viewportHeight = window.innerHeight;
       setPosition({
@@ -127,6 +133,7 @@ const ChatBot = () => {
     }
     setIsFloating(!isFloating);
   };
+
   async function query(data: {
     question: string;
   }) {
@@ -148,6 +155,7 @@ const ChatBot = () => {
       return "I'm sorry, I'm having trouble connecting to my services. Please try again later.";
     }
   }
+
   const handleSendMessage = async () => {
     if (!input.trim()) return;
     const userMessage: Message = {
@@ -183,19 +191,30 @@ const ChatBot = () => {
       setIsLoading(false);
     }
   };
+
   const handleKeyDown = (e: React.KeyboardEvent) => {
     if (e.key === 'Enter' && !e.shiftKey) {
       e.preventDefault();
       handleSendMessage();
     }
   };
+
+  const renderMessageContent = (message: Message) => {
+    if (message.sender === 'bot') {
+      return (
+        <ReactMarkdown className="prose prose-sm dark:prose-invert max-w-none break-words">
+          {message.content}
+        </ReactMarkdown>
+      );
+    }
+    return <p className="whitespace-pre-wrap break-words">{message.content}</p>;
+  };
+
   return <div className="fixed bottom-5 right-5 z-50">
-      {/* Chat toggle button - only show when chat is closed or not in float mode */}
       {(!isOpen || !isFloating) && <button onClick={() => setIsOpen(!isOpen)} className={cn("flex items-center justify-center w-14 h-14 rounded-full shadow-lg transition-all", isOpen ? "bg-destructive text-destructive-foreground" : "bg-primary text-primary-foreground")}>
           {isOpen ? <X size={24} /> : <MessageSquare size={24} />}
         </button>}
       
-      {/* Chat window */}
       {isOpen && <div ref={chatWindowRef} className={cn("bg-background border rounded-lg shadow-lg flex flex-col overflow-hidden", isFloating ? "fixed" : "absolute bottom-16 right-0")} style={isFloating ? {
       width: `${size.width}px`,
       height: `${size.height}px`,
@@ -206,7 +225,6 @@ const ChatBot = () => {
       width: 'w-80 sm:w-96',
       height: '24rem'
     }}>
-          {/* Header - now draggable in float mode */}
           <div className={cn("bg-primary text-primary-foreground p-3 flex items-center", isFloating && "cursor-move")} onMouseDown={handleDragStart}>
             <MessageSquare size={18} className="mr-2" />
             <h3 className="font-medium text-lg">CIDB ChatBot</h3>
@@ -223,11 +241,10 @@ const ChatBot = () => {
             </div>
           </div>
           
-          {/* Messages */}
           <div className="flex-1 p-3 overflow-y-auto">
             <div className="space-y-4">
               {messages.map(message => <div key={message.id} className={cn("flex flex-col max-w-[80%] rounded-lg p-3 mb-2", message.sender === 'user' ? "ml-auto bg-primary text-primary-foreground rounded-br-none" : "mr-auto bg-secondary text-secondary-foreground rounded-bl-none")}>
-                  <p className="whitespace-pre-wrap break-words">{message.content}</p>
+                  {renderMessageContent(message)}
                   <span className="text-xs opacity-70 mt-1 self-end">
                     {message.timestamp.toLocaleTimeString([], {
                 hour: '2-digit',
@@ -252,7 +269,6 @@ const ChatBot = () => {
             </div>
           </div>
           
-          {/* Input */}
           <div className="p-3 border-t">
             <div className="flex items-center">
               <input type="text" value={input} onChange={e => setInput(e.target.value)} onKeyDown={handleKeyDown} placeholder="Type your message..." className="flex-1 p-2 border rounded-l-md focus:outline-none focus:ring-1 focus:ring-primary" disabled={isLoading} />
@@ -262,7 +278,6 @@ const ChatBot = () => {
             </div>
           </div>
           
-          {/* Resize handle - only in floating mode */}
           {isFloating && <div className="absolute bottom-0 right-0 w-4 h-4 cursor-nwse-resize" onMouseDown={handleResizeStart}>
               <svg width="10" height="10" viewBox="0 0 10 10" className="absolute bottom-1 right-1 text-muted-foreground">
                 <path d="M0,10 L10,0 M0,5 L5,0 M5,10 L10,5" stroke="currentColor" strokeWidth="1" />
@@ -271,4 +286,5 @@ const ChatBot = () => {
         </div>}
     </div>;
 };
+
 export default ChatBot;
