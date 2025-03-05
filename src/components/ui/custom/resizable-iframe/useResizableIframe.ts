@@ -78,10 +78,24 @@ export function useResizableIframe(initialWidth: number, initialHeight: number) 
 
   const toggleMinimized = () => {
     setIsMinimized(!isMinimized);
+    
+    // When toggling from minimized to visible, set to detached mode by default
+    if (isMinimized) {
+      setIsDetached(true);
+      
+      // Center the window on the screen
+      const viewportWidth = window.innerWidth;
+      const viewportHeight = window.innerHeight;
+      setPosition({
+        x: viewportWidth / 2 - size.width / 2,
+        y: viewportHeight / 2 - size.height / 2
+      });
+    }
   };
 
   const handleClose = () => {
     setIsMinimized(true);
+    setIsDetached(false);
   };
 
   return {

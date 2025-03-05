@@ -1,6 +1,6 @@
 
 import React from 'react';
-import { Mic } from 'lucide-react';
+import { Mic, X } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { useResizableIframe } from './resizable-iframe/useResizableIframe';
 import IframeHeader from './resizable-iframe/IframeHeader';
@@ -27,6 +27,7 @@ const ResizableIframe: React.FC<ResizableIframeProps> = ({
 
   return (
     <>
+      {/* Voice Bot Button (Minimized State) */}
       {isMinimized && (
         <button 
           onClick={toggleMinimized} 
@@ -37,6 +38,18 @@ const ResizableIframe: React.FC<ResizableIframeProps> = ({
         </button>
       )}
       
+      {/* Close Button (When iFrame is visible and detached) */}
+      {!isMinimized && isDetached && (
+        <button 
+          onClick={handleClose} 
+          className="fixed bottom-5 right-20 z-40 flex items-center justify-center w-14 h-14 rounded-full shadow-lg bg-destructive text-destructive-foreground hover:bg-destructive/90 transition-all"
+          title="Close Voice Bot"
+        >
+          <X className="h-6 w-6" />
+        </button>
+      )}
+      
+      {/* iFrame Container */}
       {!isMinimized && (
         <div 
           ref={iframeRef}
